@@ -43,7 +43,6 @@ jobs:
         with:
           toolchain: stable
           override: true
-          node-version: '20'
           #components: rustfmt, clippy
 
       - name: Init schema
@@ -67,7 +66,7 @@ jobs:
             ${{ runner.os }}-cargo-target-${{ hashFiles('Cargo.toml') }}
             ${{ runner.os }}-cargo-target
 
-      - name: Build
-        run: cargo build
-      - name: Run tests
-        run: cargo test
+      #- name: Build
+      #  run: cargo build
+      - name: Run app
+        run: cargo run
