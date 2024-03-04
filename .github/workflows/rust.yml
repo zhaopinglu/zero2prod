@@ -36,8 +36,9 @@ jobs:
       - name: Install sqlx-cli
         run: cargo install sqlx-cli
 
-      - name: Set
-        run: export DATABASE_URL=postgres://postgres:MyNewPass4!@192.168.55.200:5432/newsletter
+      # use var in .env file
+      #- name: Set
+      #  run: export DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/newsletter
 
       - name: Mig
         run: sqlx migrate run
