@@ -32,9 +32,14 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Install sqlx-cli
-        run: cargo install sqlx-cli
+      #- name: cache-cargo-install-action
+      #  uses: taiki-e/cache-cargo-install-action@v1.3.0
+
+      - uses: taiki-e/install-action@sqlx-cli
+
+      #- uses: actions/checkout@v3
+      #- name: Install sqlx-cli
+      #  run: cargo install sqlx-cli
 
       # Depending on .env file
       - name: Init schema
