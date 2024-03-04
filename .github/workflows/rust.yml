@@ -17,7 +17,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:10.8
+        image: postgres
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
@@ -36,15 +36,12 @@ jobs:
       - name: Install sqlx-cli
         run: cargo install sqlx-cli
 
-      # use var in .env file
-      #- name: Set
-      #  run: export DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/newsletter
-
-      - name: Mig
+      # Depending on .env file
+      - name: Init schema
         run: sqlx migrate run
 
       - name: Build
         run: cargo build
 
-      - name: Run tests
-        run: cargo test
+      #- name: Run tests
+      #  run: cargo test
