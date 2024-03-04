@@ -89,7 +89,8 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
+            echo $RSYNC_STDOUT
             whoami
             ls -al
-            echo $RSYNC_STDOUT
-            nohup /root/dist/zero2prod 2>&1 &
+            cd /root/dist
+            nohup ./zero2prod 2>&1 &
