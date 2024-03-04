@@ -2,8 +2,8 @@
 application:
   port: 8000
 database:
-  host: "192.168.55.200"
+  host: "postgres"
   port: 5432
   username: "postgres"
-  password: "MyNewPass4!"
+  password: "postgres"
   database_name: "newsletter"
