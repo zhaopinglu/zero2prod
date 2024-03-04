@@ -34,10 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - uses: taiki-e/install-action@v2
         with:
           tool: sqlx-cli
@@ -74,3 +70,14 @@ jobs:
         run: cargo build
       #- name: Run tests
       #  run: cargo test
+
+      - name: Deploy to aliyun
+        uses: easingthemes/ssh-deploy@v5
+        env:
+          REMOTE_USER: 'root' #ssh user name
+          REMOTE_HOST: '123.56.112.241'
+          ARGS: '-avz --delete' #参数
+          SSH_PRIVATE_KEY: ${{secrets.ACCESS_TOKEN_ALIYUN}} #github access token
+          SOURCE: 'target/release/zero2prod /home/runner/work/zero2prod/zero2prod/configuration/ /home/runner/.cargo/bin/sqlx' #源文件目录
+          TARGET: '/root/' #目标文件目录
+          # 上面几个参数可以在github secrets中设置,然后用secrets.的模式引用
