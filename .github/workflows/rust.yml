@@ -66,7 +66,7 @@ jobs:
             ${{ runner.os }}-cargo-target-${{ hashFiles('Cargo.toml') }}
             ${{ runner.os }}-cargo-target
 
-      #- name: Build
-      #  run: cargo build
-      - name: Run app
-        run: cargo run
+      - name: Build
+        run: cargo build
+      - name: Run tests
+        run: cargo test
