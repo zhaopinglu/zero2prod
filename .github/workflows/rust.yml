@@ -92,5 +92,6 @@ jobs:
             echo $RSYNC_STDOUT
             whoami
             ls -al
+            set -vx
             cd /root/dist
-            nohup ./zero2prod 2>&1 &
+            nohup ./zero2prod 2>\&1 \&
