@@ -1,0 +1,9 @@
+# base.yaml
+application:
+  port: 8000
+database:
+  host: "192.168.55.200"
+  port: 5432
+  username: "postgres"
+  password: "MyNewPass4!"
+  database_name: "newsletter"

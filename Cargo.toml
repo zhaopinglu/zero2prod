@@ -1,0 +1,56 @@
+[package]
+name = "zero2prod"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "*"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+serde = { version = "*", features = ["derive"] }
+chrono = "0.4.33"
+uuid = { version = "1.7.0", features = ["v4"] }
+config = "*"
+secrecy = { version = "*", features = ["serde"] }
+
+tracing = { version = "*", features = ["log"] }
+tracing-subscriber = { version = "*", features = ["registry", "env-filter"] }
+tracing-bunyan-formatter = "*"
+tracing-log = "*"
+tracing-actix-web = "*"
+
+# Using table-like toml syntax to avoid a super-long line!
+[dependencies.sqlx]
+version = "*"
+default-features = false
+features = [
+    "runtime-tokio-rustls",
+    "macros",
+    "postgres",
+    "uuid",
+    "chrono",
+    "migrate"
+]
+
+
+[dev-dependencies]
+reqwest = "*"
+once_cell = "*"
+
+[lib]
+path = "src/lib.rs"
+# Notice the double square brackets: it's an array in TOML's syntax.
+# We can only have one library in a project, but we can have multiple binaries!
+# If you want to manage multiple libraries in the same repository
+# have a look at the workspace feature - we'll cover it later on.
+[[bin]]
+path = "src/main.rs"
+name = "zero2prod"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
