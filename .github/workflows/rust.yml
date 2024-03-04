@@ -38,28 +38,51 @@ jobs:
         with:
           tool: sqlx-cli
 
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
+      - name: Install latest toolchain
+        uses: actions-rs/toolchain
         with:
           toolchain: stable
           override: true
           #components: rustfmt, clippy
 
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      #- uses: actions/cache@v3
+      #  with:
+      #    path: |
+      #      ~/.cargo/bin/
+      #      ~/.cargo/registry/index/
+      #      ~/.cargo/registry/cache/
+      #      ~/.cargo/git/db/
+      #      target/
+      #    key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Init schema
         run: sqlx migrate run
 
-      - name: Build
-        run: cargo build
+      #- name: Build
+      #  run: cargo build
 
       #- name: Run tests
       #  run: cargo test
+
+      - name: Cargo Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-${{ hashFiles('Cargo.toml') }}
+            ${{ runner.os }}-cargo
+
+      - name: Cargo Target Cache
+        uses: actions/cache@v3
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-target-${{ hashFiles('Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-target-${{ hashFiles('Cargo.toml') }}
+            ${{ runner.os }}-cargo-target
+
+      - name: Build
+        run: cargo build --verbose --all-targets --features "strict"
+      #- name: Run tests
+      #  run: cargo test --verbose --all-targets --features "strict"
