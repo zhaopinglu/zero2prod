@@ -39,7 +39,7 @@ jobs:
           tool: sqlx-cli
 
       - name: Install latest toolchain
-        uses: actions-rs/toolchain
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
