@@ -94,5 +94,4 @@ jobs:
             ls -al
             set -vx
             cd /root/dist
-            echo "nohup ./zero2prod 2>&1 &" > run.sh
-            sh ./run.sh
+            (nohup ./zero2prod 2>&1 &) && echo "Done"
