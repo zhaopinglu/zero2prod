@@ -84,9 +84,10 @@ jobs:
           TARGET: '/root/dist/'
           # 上面几个参数可以在github secrets中设置,然后用secrets.的模式引用
           SCRIPT_BEFORE: |
+            ps -ef|grep zero2prod
+            pkill -f zero2prod
             whoami
             ls -al
-            pkill -f zero2prod
           SCRIPT_AFTER: |
             whoami
             ls -al
