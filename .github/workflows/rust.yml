@@ -92,8 +92,45 @@ jobs:
             echo $RSYNC_STDOUT
             whoami
             ls -al
-            set -vx
-            cd /root/dist
-            # redirect the output to log file and put job into background, 
-            # so the Action can continue the subsequent steps.
-            nohup ./zero2prod >zero2prod.log 2>&1 &
+
+  deploy:
+    runs-on: self-hosted
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: newsletter
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 2s
+          --health-timeout 2s
+          --health-retries 10
+
+    steps:
+      #- uses: taiki-e/install-action@v2
+      #  with:
+      #    tool: sqlx-cli
+
+      #- name: Install latest toolchain
+      #  uses: actions-rs/toolchain@v1
+      #  with:
+      #    toolchain: stable
+      #    override: true
+      #    #components: rustfmt, clippy
+
+      #- name: Init schema
+      #  run: sqlx migrate run
+
+      - name: Run app
+        run: |
+          cd /root/dist
+          # redirect the output to log file and put job into background, 
+          # so the Action can continue the subsequent steps.
+          nohup ./zero2prod >zero2prod.log 2>&1 &
