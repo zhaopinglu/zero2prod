@@ -94,4 +94,6 @@ jobs:
             ls -al
             set -vx
             cd /root/dist
+            # redirect the output to log file and put job into background, 
+            # so the Action can continue the subsequent steps.
             nohup ./zero2prod >zero2prod.log 2>&1 &
