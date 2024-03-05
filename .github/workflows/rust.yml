@@ -95,8 +95,7 @@ jobs:
             
             cd /root/dist
             echo "sqlx mig ..."
-            export DATABASE_URL="postgres://postgres:postgres@127.0.0.1:5432/newsletter"
-            ./sqlx migrate run > mig.log 2>&1
+            ./sqlx migrate run -D "postgres://postgres:postgres@127.0.0.1:5432/newsletter" > mig.log 2>&1
             
             # need to redirect the output to log file and put job into background,
             # otherwise the Action won't move to next step.
