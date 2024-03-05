@@ -92,10 +92,15 @@ jobs:
             echo $RSYNC_STDOUT
             whoami
             ls -al
+            
             cd /root/dist
-            ./sqlx migrate run
-            # redirect the output to log file and put job into background,
-            # so the Action can continue the subsequent steps.
+            echo "sqlx mig ..."
+            export DATABASE_URL="postgres://postgres:postgres@127.0.0.1:5432/newsletter"
+            ./sqlx migrate run > mig.log 2>&1
+            
+            # need to redirect the output to log file and put job into background,
+            # otherwise the Action won't move to next step.
+            echo "run zero2prod app ..."
             nohup ./zero2prod >zero2prod.log 2>&1 &
 
 #  exec:
