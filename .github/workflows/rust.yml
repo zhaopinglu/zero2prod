@@ -97,9 +97,10 @@ jobs:
             echo "sqlx mig ..."
             ./sqlx migrate run -D "postgres://postgres:postgres@127.0.0.1:5432/newsletter" > mig.log 2>&1
             
+            export APP_ENVIRONMENT=production
+            echo "run zero2prod app ..."
             # need to redirect the output to log file and put job into background,
             # otherwise the Action won't move to next step.
-            echo "run zero2prod app ..."
             nohup ./zero2prod >zero2prod.log 2>&1 &
 
 #  exec:
