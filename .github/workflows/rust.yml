@@ -51,7 +51,7 @@ jobs:
       - name: Cargo Cache
         uses: actions/cache@v3
         with:
-          path: ~/.cargo
+          path: ~/.cargo#
           key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-cargo-${{ hashFiles('Cargo.toml') }}
@@ -79,7 +79,7 @@ jobs:
           ARGS: '-avz --delete' #参数
           SSH_PRIVATE_KEY: ${{secrets.ACCESS_TOKEN_ALIYUN}} #github access token
           # work dir: /home/runner/work/zero2prod/zero2prod
-          SOURCE: 'target/debug/zero2prod configuration migrations ../../../.cargo/bin/sqlx ../../../.cargo/bin/bunyan'
+          SOURCE: 'target/debug/zero2prod test.bat configuration migrations ../../../.cargo/bin/sqlx ../../../.cargo/bin/bunyan'
           # Be careful: All other files under target dir will be deleted without prompt
           TARGET: '/root/dist/'
           # 上面几个参数可以在github secrets中设置,然后用secrets.的模式引用
