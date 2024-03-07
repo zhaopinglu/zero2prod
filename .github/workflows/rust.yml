@@ -103,6 +103,8 @@ jobs:
             # need to redirect the output to log file and put job into background,
             # otherwise the Action won't move to next step.
             nohup ./zero2prod >zero2prod.log 2>&1 &
+            echo "Check process ..."
+            ps -ef|grep zero2prod
 
       - name: Verify app ...
         run: curl -i -X POST -d "email=aaa@bbb.com&username=lzp" http://${{secrets.HOST_ALIYUN}}:8000/subscriptions
