@@ -9,6 +9,7 @@ edition = "2021"
 actix-web = "*"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 serde = { version = "*", features = ["derive"] }
+serde-aux = "*"
 chrono = "0.4.33"
 uuid = { version = "1.7.0", features = ["v4"] }
 config = "*"
