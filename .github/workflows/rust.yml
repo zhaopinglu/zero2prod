@@ -67,7 +67,7 @@ jobs:
             ${{ runner.os }}-cargo-target
 
       - name: Run tests
-        run: cargo test
+        run: cargo test --release
 
       - name: Build
         run: cargo build --release
@@ -86,10 +86,13 @@ jobs:
           TARGET: '/root/dist/'
           # 上面几个参数可以在github secrets中设置,然后用secrets.的模式引用
           SCRIPT_BEFORE: |
+            set -vx
             ps -ef|grep zero2prod
             pkill -f zero2prod
             whoami
             ls -al
+            cd /root/dist
+            rm -f ./zero2prod
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             whoami
