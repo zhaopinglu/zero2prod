@@ -90,13 +90,14 @@ jobs:
             ps -ef|grep zero2prod
             pkill -f zero2prod
             whoami
-            ls -al
+            ls -al /root/dist
             cd /root/dist
             rm -f ./zero2prod
           SCRIPT_AFTER: |
+            set -vx
             echo $RSYNC_STDOUT
             whoami
-            ls -al
+            ls -al /root/dist
             
             cd /root/dist
             echo "sqlx mig ..."
