@@ -1,2 +1,2 @@
 [build]
-rustflags = ["-Zthreads=4"]
+#rustflags = ["-Zthreads=4"]
