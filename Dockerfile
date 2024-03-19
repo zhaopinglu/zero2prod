@@ -14,7 +14,7 @@ COPY . .
 #RUN cargo install bunyan
 RUN cargo chef prepare --recipe-path recipe.json
 
-FROM chef as builder
+FROM chef as _builder
 WORKDIR /app
 #COPY --from=planner /usr/local/cargo/bin/bunyan bunyan
 COPY cargo_config.toml $CARGO_HOME/config
@@ -41,8 +41,8 @@ RUN apt-get update -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /app/target/release/zero2prod zero2prod
-#COPY --from=builder /app/bunyan bunyan
+COPY --from=_builder /app/target/release/zero2prod zero2prod
+#COPY --from=_builder /app/bunyan bunyan
 COPY configuration configuration
 ENV APP_ENVIRONMENT production
 #ENTRYPOINT ["/bin/sh", "-c", "./zero2prod | ./bunyan"]
