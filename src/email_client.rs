@@ -28,7 +28,7 @@ impl EmailClient {
     }
 
     // curl -X POST 'https://api.resend.com/emails' \
-    // -H 'Authorization: Bearer re_W5s88nYj_FbQFskmEmBSy7ysXv7XjqzT2' \
+    // -H 'Authorization: Bearer xxxxxxxxxxxx' \
     // -H 'Content-Type: application/json' \
     // -d $'{
     // "from": "onboarding@resend.dev",
