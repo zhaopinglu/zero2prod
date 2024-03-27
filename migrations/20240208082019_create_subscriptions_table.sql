@@ -14,12 +14,12 @@
 
 -- ref: zero2prod p81
 -- Create db
--- set DATABASE_URL=postgres://postgres:MyNewPass4!@192.168.55.200:5432/newsletter
+-- set DATABASE_URL=postgres://postgres:MyNewPass4!@192.168.55.200:5432/newsletters
 -- sqlx database create
 -- sqlx migrate run
 
 -- Config .env file:
--- DATABASE_URL="postgres://postgres:MyNewPass4!@192.168.55.200:5432/newsletter"
+-- DATABASE_URL="postgres://postgres:MyNewPass4!@192.168.55.200:5432/newsletters"
 
 -- Subscriptions
 -- curl -i -X POST -d "email=aaa@bbb.com&username=lzp" http://127.0.0.1:8000/subscriptions
