@@ -92,21 +92,28 @@ async fn subscribe_persists_the_new_subscriber() {
 #[tokio::test]
 async fn subscribe_returns_a_400_when_data_is_missing() {
     let app = spawn_app().await;
+    Mock::given(path("/emails"))
+        .and(method("POST"))
+        .respond_with(ResponseTemplate::new(200))
+        .mount(&app.email_server)
+        .await;
     let test_cases = vec![
-        ("username=le%20guin", "missing the email"),
-        ("email=ursula_le_guin%40gmail.com", "missing the name"),
+        (400, "username=le%20guin", "missing the email"),
+        (400, "email=ursula_le_guin%40gmail.com", "missing the name"),
+        (400, "", "missing both name and email"),
         (
+            200,
             "username=le%20guin&email=ursula_le_guin%40gmail.com",
             "Good",
         ),
-        ("", "missing both name and email"),
     ];
-    for (invalid_body, error_message) in test_cases {
+    for (status_code, invalid_body, error_message) in test_cases {
         // Act
         let response = app.post_subscriptions(invalid_body.into()).await;
         // Assert
         assert_eq!(
-            400,
+            // 400,
+            status_code,
             response.status().as_u16(),
             // Additional customised error message on test failure
             "The API did not fail with 400 Bad Request when the payload was {}.",
